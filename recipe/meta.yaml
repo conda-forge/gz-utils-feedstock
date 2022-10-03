@@ -1,9 +1,10 @@
 {% set component_name = "utils" %}
 {% set repo_name = "gz-" + component_name %}
-{% set base_name = "lib" + repo_name %}
 {% set version = "2.0.0" %}
 {% set major_version = version.split('.')[0] %}
-{% set name = base_name + major_version %}
+{% set name = repo_name + major_version %}
+{% set component_version = component_name + major_version %}
+{% set cxx_name = "lib" + name %}
 
 package:
   name: {{ name }}
@@ -14,34 +15,55 @@ source:
     sha256: af9e5b862e10aa0cedd97d9c5ca3eb9a443b7c9e560a083e8f0399e93e1cfafa
 
 build:
-  number: 0
-  run_exports:
-    - {{ pin_subpackage(name, max_pin='x') }}
+  number: 1
 
-requirements:
-  build:
-    - {{ compiler('cxx') }}
-    - {{ compiler('c') }}
-    - cmake
-    - ninja
-    - pkgconfig
-  host:
-    - libgz-cmake3
-    - cli11
-  run:
-    - cli11
+outputs:
+  - name: {{ cxx_name }}
+    script: build_cxx.sh  # [unix]
+    script: bld_cxx.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage(cxx_name, max_pin='x') }}
+    requirements:
+      build:
+        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}
+        - cmake
+        - ninja
+        - pkgconfig
+      host:
+        - libgz-cmake3
+        - cli11
+      run:
+        - cli11
+    test:
+      commands:
+        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]
+        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]
+        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]
+        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]
+        - if not exist %PREFIX%\\Library\\include\\gz\\{{ component_version }}\\gz\\{{ component_name }}.hh exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\lib\\{{ name }}.lib exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\bin\\{{ name }}.dll exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\lib\\cmake\\{{ name }}\\{{ name }}-config.cmake exit 1  # [win]
 
-test:
-  commands:
-    - test -f ${PREFIX}/include/gz/{{ component_name }}{{ major_version }}/gz/{{ component_name }}.hh  # [not win]
-    - test -f ${PREFIX}/lib/libgz-{{ component_name }}{{ major_version }}.so  # [linux]
-    - test -f ${PREFIX}/lib/libgz-{{ component_name }}{{ major_version }}.dylib  # [osx]
-    - test -f ${PREFIX}/lib/cmake/gz-{{ component_name }}{{ major_version }}/gz-{{ component_name }}{{ major_version }}-config.cmake  # [not win]
-    - if not exist %PREFIX%\\Library\\include\\gz\\{{ component_name }}{{ major_version }}\\ignition\\{{ component_name }}.hh exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\gz-{{ component_name }}{{ major_version }}.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\gz-{{ component_name }}{{ major_version }}.dll exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\cmake\\gz-{{ component_name }}{{ major_version }}\\gz-{{ component_name }}{{ major_version }}-config.cmake exit 1  # [win]
-
+  - name: {{ name }}
+    build:
+      run_exports:
+        - {{ pin_subpackage(cxx_name, max_pin='x') }}
+    requirements:
+      run:
+        - {{ pin_subpackage(cxx_name, exact=True) }}
+    test:
+      commands:
+        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]
+        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]
+        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]
+        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]
+        - if not exist %PREFIX%\\Library\\include\\gz\\{{ component_version }}\\gz\\{{ component_name }}.hh exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\lib\\{{ name }}.lib exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\bin\\{{ name }}.dll exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\lib\\cmake\\{{ name }}\\{{ name }}-config.cmake exit 1  # [win]
 
 about:
   home: https://github.com/gazebosim/{{ repo_name }}
@@ -50,7 +72,6 @@ about:
   summary: 'Classes and functions for robot applications.'
 
 extra:
-  feedstock-name: {{ repo_name }}
   recipe-maintainers:
     - wolfv
     - traversaro
