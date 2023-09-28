@@ -14,6 +14,10 @@ package:
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz
     sha256: 667d5000ff02ea332e6d4aa9fba1e31b2d3d153e69d40693918a8bb44330ca57
+    # test disable for centos7 compatibility, we can drop once conda-forge uses a newer distro for builds
+    # see https://github.com/conda-forge/gz-utils-feedstock/pull/6#issuecomment-1738770350
+    patches:
+      - disable_subprocess_createinvalid_test.patch  # [linux]
 
 build:
   number: 0
