@@ -1,11 +1,11 @@
-About gz-utils2
-===============
+About gz-utils2-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gz-utils-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/gazebosim/gz-utils
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gz-utils-feedstock/blob/main/LICENSE.txt)
 
 Summary: Classes and functions for robot applications.
 

@@ -1,6 +1,6 @@
 {% set component_name = "utils" %}
 {% set repo_name = "gz-" + component_name %}
-{% set version = "2_2.0.0" %}
+{% set version = "2_2.1.0" %}
 {% set major_version = version.split('_')[0] %}
 {% set version_package = version.split('_')[1] %}
 {% set name = repo_name + major_version %}
@@ -13,10 +13,14 @@ package:
 
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz
-    sha256: af9e5b862e10aa0cedd97d9c5ca3eb9a443b7c9e560a083e8f0399e93e1cfafa
+    sha256: 667d5000ff02ea332e6d4aa9fba1e31b2d3d153e69d40693918a8bb44330ca57
+    # test disable for centos7 compatibility, we can drop once conda-forge uses a newer distro for builds
+    # see https://github.com/conda-forge/gz-utils-feedstock/pull/6#issuecomment-1738770350
+    patches:
+      - disable_subprocess_createinvalid_test.patch  # [linux]
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: {{ cxx_name }}
