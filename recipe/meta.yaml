@@ -15,8 +15,10 @@ source:
     sha256: 15846369999e1269ab4dcb2f9fd2b4acdd162a69ae40a3f1cd3889437173d3aa
     # test disable for centos7 compatibility, we can drop once conda-forge uses a newer distro for builds
     # see https://github.com/conda-forge/gz-utils-feedstock/pull/6#issuecomment-1738770350
+    # see https://github.com/conda-forge/gz-utils-feedstock/pull/7#issuecomment-2308794505
     patches:
       - disable_subprocess_createinvalid_test.patch  # [linux]
+      - do_not_check_failed_test_output_value.patch  # [linux]
 
 build:
   number: 0
