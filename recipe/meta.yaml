@@ -39,7 +39,7 @@ outputs:
         - ninja
         - pkgconfig
       host:
-        - libgz-cmake3
+        - libgz-cmake4
         - cli11
       run:
         - cli11
