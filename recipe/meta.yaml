@@ -21,7 +21,7 @@ source:
       - do_not_check_failed_test_output_value.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: {{ cxx_name }}
@@ -41,6 +41,7 @@ outputs:
       host:
         - libgz-cmake4
         - cli11
+        - spdlog
       run:
         - cli11
     test:
@@ -53,6 +54,11 @@ outputs:
         - if not exist %PREFIX%\\Library\\lib\\{{ name }}.lib exit 1  # [win]
         - if not exist %PREFIX%\\Library\\bin\\{{ name }}.dll exit 1  # [win]
         - if not exist %PREFIX%\\Library\\lib\\cmake\\{{ name }}\\{{ name }}-config.cmake exit 1  # [win]
+        - cmake-package-check gz-utils3 --targets gz-utils3::log
+      requires:
+        - cmake-package-check
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
 
   - name: {{ name }}
     build:
