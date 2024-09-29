@@ -9,6 +9,6 @@ channel_targets:
 cxx_compiler:
 - vs2019
 spdlog:
-- '1.12'
+- '1.13'
 target_platform:
 - win-64
