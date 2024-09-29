@@ -21,7 +21,7 @@ source:
       - do_not_check_failed_test_output_value.patch  # [linux]
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: {{ cxx_name }}
