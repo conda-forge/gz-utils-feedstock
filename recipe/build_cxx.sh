@@ -3,6 +3,8 @@
 mkdir build
 cd build
 
+CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+
 cmake ${CMAKE_ARGS} -GNinja \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
