@@ -17,7 +17,6 @@ source:
   - url: https://github.com/gazebosim/${{ repo_name }}/archive/${{ repo_name }}${{ major_version }}_${{ version }}.tar.gz
     sha256: e3cf80c00454c964d61948d13e79a790cfa14b82fbb0c76fbd8170105fb28761
 
-
 build:
   number: 2
 
@@ -128,8 +127,6 @@ outputs:
             - cmake-package-check
             - ${{ compiler('c') }}
             - ${{ compiler('cxx') }}
-
-
 
 about:
   homepage: https://github.com/gazebosim/${{ repo_name }}
