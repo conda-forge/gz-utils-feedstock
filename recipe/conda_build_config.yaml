@@ -31,7 +31,7 @@ libgz_tools:
   - 2
 libgz_transport:
   - 15
-libgz_utils:
-  - 4
+#libgz_utils:
+#  - 4
 libsdformat:
   - 16

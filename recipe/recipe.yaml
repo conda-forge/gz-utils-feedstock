@@ -9,7 +9,7 @@ context:
   cxx_name: libgz-utils
 
 recipe:
-  name: ${{ name }}
+  name: gz-utils-split
   version: ${{ version }}
 
 source:
