@@ -23,7 +23,7 @@ libgz_cmake:
 macos_machine:
 - arm64-apple-darwin20.0.0
 spdlog:
-- '1.15'
+- '1.16'
 target_platform:
 - osx-arm64
 zip_keys:
