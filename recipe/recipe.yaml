@@ -2,12 +2,12 @@ schema_version: 1
 
 context:
   component_name: utils
-  repo_name: ${{ "gz-" + component_name }}
+  repo_name: ${{ "gz-" ~ component_name }}
   version: 3.1.1
   major_version: "3"
-  name: ${{ repo_name + major_version }}
-  component_version: ${{ component_name + major_version }}
-  cxx_name: ${{ "lib" + name }}
+  name: ${{ repo_name ~ major_version }}
+  component_version: ${{ component_name ~ major_version }}
+  cxx_name: ${{ "lib" ~ name }}
 
 recipe:
   name: ${{ name }}
@@ -18,7 +18,7 @@ source:
     sha256: e3cf80c00454c964d61948d13e79a790cfa14b82fbb0c76fbd8170105fb28761
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - package:
@@ -59,15 +59,13 @@ outputs:
               - test -f ${PREFIX}/lib/lib${{ name }}$SHLIB_EXT
               - test -f ${PREFIX}/lib/lib${{ name }}-log$SHLIB_EXT
               - test -f ${PREFIX}/lib/cmake/${{ name }}/${{ name }}-config.cmake
-          - if: win
-            then:
+            else:
               - if not exist %PREFIX%\\Library\\include\\gz\\${{ component_version }}\\gz\\${{ component_name }}.hh exit 1
               - if not exist %PREFIX%\\Library\\lib\\${{ name }}.lib exit 1
               - if not exist %PREFIX%\\Library\\bin\\${{ name }}.dll exit 1
               - if not exist %PREFIX%\\Library\\lib\\cmake\\${{ name }}\\${{ name }}-config.cmake exit 1
               - if not exist %PREFIX%\\Library\\lib\\${{ name }}-log.lib exit 1
               - if not exist %PREFIX%\\Library\\bin\\${{ name }}-log.dll exit 1
-
   - package:
       name: ${{ name }}
     requirements:
