@@ -9,6 +9,6 @@ channel_targets:
 cxx_compiler:
 - vs2022
 spdlog:
-- '1.16'
+- '1.17'
 target_platform:
 - win-64
