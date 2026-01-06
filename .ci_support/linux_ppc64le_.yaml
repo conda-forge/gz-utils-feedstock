@@ -19,7 +19,7 @@ docker_image:
 libgz_cmake:
 - '5'
 spdlog:
-- '1.16'
+- '1.17'
 target_platform:
 - linux-ppc64le
 zip_keys:

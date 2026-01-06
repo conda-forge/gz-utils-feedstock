@@ -11,6 +11,6 @@ cxx_compiler:
 libgz_cmake:
 - '5'
 spdlog:
-- '1.16'
+- '1.17'
 target_platform:
 - win-64
